@@ -1,8 +1,16 @@
-# cursor-skill-security-review
+# skill-security-review
 
-A [Cursor](https://cursor.com) AI agent skill that performs structured security reviews of automation skills, deployment plans, and live setups. It finds real risks — credential exposure, injection vectors, blast radius gaps, failure cascading — instead of rubber-stamping automation as "looks fine."
+An [agent skill](https://skills.sh) that performs structured security reviews of automation skills, deployment plans, and live setups. It finds real risks — credential exposure, injection vectors, blast radius gaps, failure cascading — instead of rubber-stamping automation as "looks fine."
 
 The skill adopts the mindset of a senior cybersecurity analyst: it assumes the artifact under review will eventually be used under adversarial conditions, operated by a tired human against the wrong environment, and left in an inconsistent state by a partial failure. It finds these failure paths before they happen.
+
+## Install
+
+```bash
+npx skills add davethegut/cursor-skill-security-review
+```
+
+Works with [Cursor](https://cursor.com), [Claude Code](https://code.claude.com), [Codex](https://developers.openai.com/codex), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [GitHub Copilot](https://github.com/features/copilot), [Roo Code](https://roocode.com), and [40+ other agents](https://skills.sh/docs/cli).
 
 ## How It Works
 
@@ -40,7 +48,7 @@ The independent second-pass agent reads the artifact fresh, validates checklist 
 
 | Mode | When to Use | Input |
 |------|-------------|-------|
-| **Skill Review** | Reviewing a Cursor agent skill | Path to a `SKILL.md` or skill directory |
+| **Skill Review** | Reviewing an agent skill | Path to a `SKILL.md` or skill directory |
 | **Deployment Plan Review** | Auditing an infrastructure or deployment plan | Path to a plan/setup markdown file |
 | **Post-Deployment Audit** | Checking a live system's configuration | Config output, setup description, or running config |
 
@@ -92,48 +100,65 @@ When in doubt, the skill uses the higher severity. It is better to over-flag and
 
 ## Installation
 
-### Global (available to all projects)
-
-Copy the skill directory to your global Cursor skills folder:
+### Via skills.sh (recommended)
 
 ```bash
-git clone https://github.com/davethegut/cursor-skill-security-review.git
-cp -r cursor-skill-security-review ~/.cursor/skills/skill-security-review
+npx skills add davethegut/cursor-skill-security-review
 ```
 
-### Project-level (available to one project)
+The CLI auto-detects which agents you have installed and offers to install to each one. Use flags for non-interactive installation:
 
-Copy into your project's `.cursor/skills/` directory:
+```bash
+# Install to a specific agent
+npx skills add davethegut/cursor-skill-security-review -a cursor -y
+
+# Install globally (available to all projects)
+npx skills add davethegut/cursor-skill-security-review -g
+
+# Install to all detected agents
+npx skills add davethegut/cursor-skill-security-review --all
+```
+
+### Manual installation
+
+Clone the repo and copy into your agent's skills directory:
 
 ```bash
 git clone https://github.com/davethegut/cursor-skill-security-review.git
-cp -r cursor-skill-security-review /path/to/your/project/.cursor/skills/skill-security-review
+
+# Cursor
+cp -r cursor-skill-security-review ~/.cursor/skills/skill-security-review
+
+# Claude Code
+cp -r cursor-skill-security-review ~/.claude/skills/skill-security-review
+
+# Or any agent's skills directory
 ```
 
 ### Verify installation
 
-The skill should appear in Cursor's skill list. You can confirm by checking that `SKILL.md` is readable at the installed path and that the `references/` directory contains the three reference files.
+Confirm that `SKILL.md` is readable at the installed path and that the `references/` directory contains the three reference files (review-checklist.md, common-failure-modes.md, review-template.md).
 
 ## Usage
 
-Attach the skill in a Cursor chat by referencing it with `@skill-security-review`, then point it at the artifact you want reviewed.
+Point the skill at the artifact you want reviewed. How you invoke it depends on your agent:
 
 ### Skill Review
 
 ```
-@skill-security-review Review the skill at skills/my-automation/SKILL.md
+Review the skill at skills/my-automation/SKILL.md
 ```
 
 ### Deployment Plan Review
 
 ```
-@skill-security-review Review the deployment plan at docs/infrastructure-plan.md
+Review the deployment plan at docs/infrastructure-plan.md
 ```
 
 ### Post-Deployment Audit
 
 ```
-@skill-security-review Audit the current security setup based on this config: [paste config]
+Audit the current security setup based on this config: [paste config]
 ```
 
 ### What to Expect
@@ -197,7 +222,7 @@ The severity guidelines in `SKILL.md` can be adjusted to match your organization
 │   ├── common-failure-modes.md       # 10 structural failure patterns
 │   └── review-template.md           # Standardized report output template
 └── examples/
-    └── sample-review-output.md       # Real review report from an attack-discovery triage skill
+    └── sample-review-output.md       # Real review report (anonymized)
 ```
 
 ## License
