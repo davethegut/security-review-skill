@@ -31,12 +31,13 @@ findings (see attack-discovery-triage as a positive example).
 far more records than intended. Acknowledging 5 alerts is routine; acknowledging 5,000 is an
 incident. The difference is one missing `LIMIT` clause.
 
-**What to check**: Does every bulk operation have an explicit maximum? Is there a dry-run step? Does
-the skill require confirmation when the affected count exceeds a threshold? Would the operation
-degrade gracefully if the query returned 10x the expected results?
+**What to check**: Does every bulk operation have an explicit maximum (a **circuit breaker**)? Is
+there a dry-run step? Does the skill require confirmation when the affected count exceeds a
+threshold? Would the operation degrade gracefully if the query returned 10x the expected results?
 
 **Good pattern**: Always dry-run first, require confirmation above a threshold (e.g., 50 alerts),
-hard cap at a maximum (e.g., 500).
+hard cap at a maximum (e.g., 500). These are circuit breakers — they stop cascading damage before
+it happens.
 
 ---
 

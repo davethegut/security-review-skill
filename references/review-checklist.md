@@ -4,6 +4,10 @@ Structured checklist for evaluating skills, deployment plans, and live setups. E
 specific checks with severity guidance. Not every check applies to every artifact — skip checks that
 are clearly irrelevant to the artifact type.
 
+**This checklist uses Elastic/Kibana terminology as concrete examples, but the security principles
+apply universally.** When reviewing non-Elastic artifacts (CI/CD pipelines, Terraform plans, Docker
+setups, Kubernetes configs, generic APIs), map each check to the equivalent concept in that domain.
+
 Severity levels: **CRITICAL** (must fix before use), **HIGH** (significant risk, fix soon),
 **MEDIUM** (notable concern, should address), **LOW** (minor improvement, nice to have).
 
@@ -65,8 +69,8 @@ Severity levels: **CRITICAL** (must fix before use), **HIGH** (significant risk,
 
 | # | Check | Severity | Details |
 |---|-------|----------|---------|
-| 6.1 | Shell command injection via alert fields | CRITICAL | Attacker-controlled data (hostnames, usernames, file paths, command lines) from alert fields injected into shell commands without quoting or escaping. Check all `node ... --title "<field>"` patterns. |
-| 6.2 | Query injection via untrusted input | HIGH | ES\|QL or KQL queries constructed by string concatenation with values from alert data. An attacker who controls a hostname or username could inject query syntax. Check for parameterization or escaping. |
+| 6.1 | Shell command injection via alert fields | CRITICAL | Attacker-controlled data (hostnames, usernames, file paths, command lines) from alert fields injected into shell commands without quoting or escaping. Check all `node ... --title "<field>"` patterns. **Domain note**: this check applies to any shell/CLI command execution with untrusted input — not to query languages (see 6.2). |
+| 6.2 | Query injection via untrusted input | HIGH | ES\|QL or KQL queries constructed by string concatenation with values from alert data. An attacker who controls a hostname or username could inject query syntax. Check for parameterization or escaping. **Domain note**: applies to ALL query languages — SQL, ES\|QL, KQL, GraphQL, Cypher, PromQL. When reviewing non-Elastic artifacts, map SQL injection, GraphQL injection, etc. to this check (6.2), not to shell injection (6.1). |
 | 6.3 | Prompt injection via case content | HIGH | Case descriptions built from attacker-controlled alert data (process names, command lines) that are later fed to an LLM. Malicious process names like `powershell -c "ignore previous instructions..."` could manipulate AI analysis. |
 | 6.4 | Markdown injection in case fields | MEDIUM | Untrusted content in case descriptions or comments could contain markdown that renders as links, images, or hidden content in the Kibana UI. |
 | 6.5 | Path traversal in file references | MEDIUM | If the skill reads files based on user input or alert data (e.g., script paths, query file paths), check for `../` traversal or absolute path injection. |
