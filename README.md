@@ -7,7 +7,7 @@ The skill adopts the mindset of a senior cybersecurity analyst: it assumes the a
 ## Install
 
 ```bash
-npx skills add davethegut/cursor-skill-security-review
+npx skills add davethegut/security-review-skill
 ```
 
 Works with [Cursor](https://cursor.com), [Claude Code](https://code.claude.com), [Codex](https://developers.openai.com/codex), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [GitHub Copilot](https://github.com/features/copilot), [Roo Code](https://roocode.com), and [40+ other agents](https://skills.sh/docs/cli).
@@ -103,20 +103,20 @@ When in doubt, the skill uses the higher severity. It is better to over-flag and
 ### Via skills.sh (recommended)
 
 ```bash
-npx skills add davethegut/cursor-skill-security-review
+npx skills add davethegut/security-review-skill
 ```
 
 The CLI auto-detects which agents you have installed and offers to install to each one. Use flags for non-interactive installation:
 
 ```bash
 # Install to a specific agent
-npx skills add davethegut/cursor-skill-security-review -a cursor -y
+npx skills add davethegut/security-review-skill -a cursor -y
 
 # Install globally (available to all projects)
-npx skills add davethegut/cursor-skill-security-review -g
+npx skills add davethegut/security-review-skill -g
 
 # Install to all detected agents
-npx skills add davethegut/cursor-skill-security-review --all
+npx skills add davethegut/security-review-skill --all
 ```
 
 ### Manual installation
@@ -124,13 +124,13 @@ npx skills add davethegut/cursor-skill-security-review --all
 Clone the repo and copy into your agent's skills directory:
 
 ```bash
-git clone https://github.com/davethegut/cursor-skill-security-review.git
+git clone https://github.com/davethegut/security-review-skill.git
 
 # Cursor
-cp -r cursor-skill-security-review ~/.cursor/skills/skill-security-review
+cp -r security-review-skill ~/.cursor/skills/skill-security-review
 
 # Claude Code
-cp -r cursor-skill-security-review ~/.claude/skills/skill-security-review
+cp -r security-review-skill ~/.claude/skills/skill-security-review
 
 # Or any agent's skills directory
 ```

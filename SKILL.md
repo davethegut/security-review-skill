@@ -153,8 +153,8 @@ Your task:
 1. Read the original artifact at: {path to skill/plan/config}
 2. Read all files it references (scripts, references/, .env patterns)
 3. Read the first-pass security review at: work_docs/reviews/security-review-{name}-{date}.md
-4. Read the review checklist at: ~/.cursor/skills/skill-security-review/references/review-checklist.md
-5. Read the failure modes guide at: ~/.cursor/skills/skill-security-review/references/common-failure-modes.md
+4. Read the review checklist at: references/review-checklist.md
+5. Read the failure modes guide at: references/common-failure-modes.md
 
 Then provide your independent assessment:
 
